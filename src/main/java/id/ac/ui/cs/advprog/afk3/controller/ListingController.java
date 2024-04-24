@@ -35,6 +35,8 @@ public class ListingController {
     public String listingListPage(Model model){
         List<Listing> allListings = listingService.findAll();
         model.addAttribute("listings", allListings);
+        List<Listing> featuredListings = listingService.getFeaturedListings();
+        model.addAttribute("featuredListings", featuredListings);
         return listHTML;
     }
 
@@ -58,5 +60,11 @@ public class ListingController {
     public String deleteListing(Model model, @RequestParam("listingId") String listingId){
         listingService.deleteListingById(listingId);
         return "redirect:list";
+    }
+
+    @GetMapping("/mark-as-featured/{listingId}")
+    public String markFeaturedListing(Model model, @PathVariable("listingId") String listingId) {
+        listingService.markAsFeatured(listingId);
+        return "redirect:../list";
     }
 }

@@ -11,6 +11,27 @@
     <h2>Listing's List</h2>
     <a th:href="@{/listing/create}" class="btn btn-primary btn-sm mb-3">Create Listing</a>
 
+    <h3>Featured Listing</h3>
+    <table border="1" class="table table-striped table-responsive-md">
+        <thead>
+        <tr>
+            <th scope="col">listing Name</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">listing description</th>
+            <th scope="col">listing seller</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="featuredListings: ${featuredListings}">
+            <td th:text="${featuredListings.name}"></td>
+            <td th:text="${featuredListings.quantity}"></td>
+            <td th:text="${featuredListings.description}"></td>
+            <td th:text="${featuredListings.sellerUsername}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>All Listing</h3>
     <table border="1" class="table table-striped table-responsive-md">
         <thead>
         <tr>
@@ -28,6 +49,9 @@
             <td th:text="${listing.sellerUsername}"></td>
             <td>
                 <a th:href="@{/listing/edit/{id}(id=${listing.id})}" class="btn btn-info btn-sm">Edit</a>
+            </td>
+            <td>
+                <a th:href="@{/listing/mark-as-featured/{id}(id=${listing.id})}" class="btn btn-info btn-sm">Mark as Featured</a>
             </td>
             <td>
                 <form th:action="@{/listing/delete}" method="post" >
