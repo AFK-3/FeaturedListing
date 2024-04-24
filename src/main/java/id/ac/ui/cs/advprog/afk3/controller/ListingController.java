@@ -59,4 +59,10 @@ public class ListingController {
         listingService.deleteListingById(listingId);
         return "redirect:list";
     }
+
+    @GetMapping("/mark-as-featured/{listingId}")
+    public String markFeaturedListing(Model model, @PathVariable("listingId") String listingId) {
+        listingService.markAsFeatured(listingId);
+        return "redirect:../list";
+    }
 }
