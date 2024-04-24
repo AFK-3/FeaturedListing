@@ -60,4 +60,14 @@ public class ListingRepository {
         Listing listing = findById(id);
         listing.setFeatured(true);
     }
+
+    public List<Listing> getFeatured() {
+        List<Listing> featuredListing = new ArrayList<>();
+        for (Listing listingDatum : listingData) {
+            if (listingDatum.isFeatured()) {
+                featuredListing.add(listingDatum);
+            }
+        }
+        return featuredListing;
+    }
 }
