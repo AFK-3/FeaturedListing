@@ -65,4 +65,7 @@ public class ListingServiceImpl implements  ListingService{
     public void deleteListingById(String listingId) {
         listingRepository.delete(listingId);
     }
+
+    @Override
+    public void markAsFeatured(String listingId) { listingRepository.markAsFeatured(listingId);}
 }

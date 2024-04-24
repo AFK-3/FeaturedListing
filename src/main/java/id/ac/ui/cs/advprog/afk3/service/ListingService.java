@@ -10,4 +10,5 @@ public interface ListingService {
     Listing findById(String listingId);
     public Listing update(String listingId, Listing listing);
     public void deleteListingById(String listingId);
+    public void markAsFeatured(String listingId);
 }
