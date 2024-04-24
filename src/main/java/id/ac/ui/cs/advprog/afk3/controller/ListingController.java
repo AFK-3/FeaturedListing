@@ -35,6 +35,8 @@ public class ListingController {
     public String listingListPage(Model model){
         List<Listing> allListings = listingService.findAll();
         model.addAttribute("listings", allListings);
+        List<Listing> featuredListings = listingService.getFeaturedListings();
+        model.addAttribute("featuredListings", featuredListings);
         return listHTML;
     }
 
