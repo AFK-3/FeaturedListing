@@ -55,4 +55,9 @@ public class ListingRepository {
     public void delete(String id){
         listingData.removeIf(Listing -> Listing.getId().equals(UUID.fromString(id)));
     }
+
+    public void markAsFeatured(String id) {
+        Listing listing = findById(id);
+        listing.setFeatured(true);
+    }
 }
