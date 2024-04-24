@@ -67,5 +67,8 @@ public class ListingServiceImpl implements  ListingService{
     }
 
     @Override
-    public void markAsFeatured(String listingId) { listingRepository.markAsFeatured(listingId);}
+    public void markAsFeatured(String listingId) { listingRepository.markAsFeatured(listingId); }
+
+    @Override
+    public List<Listing> getFeaturedListings() { return listingRepository.getFeatured(); }
 }
