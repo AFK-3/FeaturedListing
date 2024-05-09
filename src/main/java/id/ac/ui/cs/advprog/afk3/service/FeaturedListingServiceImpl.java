@@ -1,35 +1,41 @@
 package id.ac.ui.cs.advprog.afk3.service;
 
+import id.ac.ui.cs.advprog.afk3.model.Builder.FeaturedListingBuilder;
 import id.ac.ui.cs.advprog.afk3.model.FeaturedListing;
 import id.ac.ui.cs.advprog.afk3.repository.FeaturedListingRepository;
+import id.ac.ui.cs.advprog.afk3.repository.FeaturedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class FeaturedListingServiceImpl implements FeaturedListingService {
     @Autowired
     FeaturedListingRepository featuredListingRepository;
 
+    @Autowired
+    private FeaturedListingBuilder featuredListingBuilder;
+
+    @Autowired
+    FeaturedRepository featuredRepository;
+
     @Override
     public FeaturedListing create(FeaturedListing listing){
-        if(!checkIfListingPresent(listing.getId())){
-            featuredListingRepository.createFeaturedListing(listing);
-            return listing;
-        }
-        return null;
+        listing = featuredListingBuilder.reset().setCurrent(listing).build();
+        featuredRepository.save(listing);
+        return listing;
+    }
+
+    @Override
+    public FeaturedListing getFeaturedById(String id) {
+        return featuredRepository.findById(id).
+                orElseThrow(NoSuchElementException::new);
     }
 
     @Override
     public List<FeaturedListing> findAll(){
-        Iterator<FeaturedListing> listingIterator=featuredListingRepository.findAll();
-        List<FeaturedListing> allListing = new ArrayList<>();
-        listingIterator.forEachRemaining(allListing::add);
-        return allListing;
+        return featuredRepository.findAll();
     }
 
     @Override
@@ -39,11 +45,15 @@ public class FeaturedListingServiceImpl implements FeaturedListingService {
 
     @Override
     public void deleteFeatured(String id) {
-        featuredListingRepository.delete(id);
+        FeaturedListing featuredListing = featuredRepository.findById(id).
+                orElseThrow(NoSuchElementException::new);
+        featuredRepository.delete(featuredListing);
     }
 
     @Override
-    public void editFeatured(String id, Calendar featuredExpiryTime) {
-        featuredListingRepository.editFeatured(id, featuredExpiryTime);
+    public FeaturedListing editFeatured(FeaturedListing featuredListing) {
+        featuredListing = featuredListingBuilder.reset().setCurrent(featuredListing).build();
+        featuredRepository.save(featuredListing);
+        return featuredListing;
     }
 }

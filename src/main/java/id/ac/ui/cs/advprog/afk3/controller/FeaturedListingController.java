@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/featured-listing")
@@ -23,27 +24,32 @@ public class FeaturedListingController {
         return featuredListingService.create(listing);
     }
 
-    @GetMapping("/get-all-featured")
+    @GetMapping("/{listingId}")
+    public ResponseEntity<?> getFeaturedById(Model model, @PathVariable("listingId") String listingId) {
+        try {
+            return ResponseEntity.ok(featuredListingService.getFeaturedById(listingId));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Listing not found");
+        }
+    }
+
+    @GetMapping("/get-all")
     public List<FeaturedListing> getAllFeatured() {
         return featuredListingService.findAll();
     }
 
-    @DeleteMapping("/delete-featured/{listingId}")
+    @DeleteMapping("/delete/{listingId}")
     public ResponseEntity<String> deleteFeatured(Model model, @PathVariable("listingId") String listingId) {
-        featuredListingService.deleteFeatured(listingId);
-        return ResponseEntity.ok("Listing berhasil dihapus dari daftar featured");
+        try {
+            featuredListingService.deleteFeatured(listingId);
+            return ResponseEntity.ok("Listing berhasil dihapus dari daftar featured");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Listing not found");
+        }
     }
 
-    @PutMapping("/edit-featured/{listingId}")
-    public ResponseEntity<String> editFeatured(Model model, @PathVariable("listingId") String listingId, @RequestBody String featuredExpiryTime) {
-        try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(format.parse(featuredExpiryTime));
-            featuredListingService.editFeatured(listingId, cal);
-            return ResponseEntity.ok("Listing berhasil diubah");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error");
-        }
+    @PutMapping("/edit")
+    public FeaturedListing editFeatured(@RequestBody FeaturedListing listing) {
+        return featuredListingService.editFeatured(listing);
     }
 }
