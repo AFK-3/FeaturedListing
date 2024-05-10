@@ -5,6 +5,7 @@ import id.ac.ui.cs.advprog.afk3.model.FeaturedListing;
 import id.ac.ui.cs.advprog.afk3.repository.FeaturedListingRepository;
 import id.ac.ui.cs.advprog.afk3.repository.FeaturedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -44,6 +45,13 @@ public class FeaturedListingServiceImpl implements FeaturedListingService {
     }
 
     @Override
+    public FeaturedListing editFeatured(FeaturedListing featuredListing) {
+        featuredListing = featuredListingBuilder.reset().setCurrent(featuredListing).build();
+        featuredRepository.save(featuredListing);
+        return featuredListing;
+    }
+
+    @Override
     public void deleteFeatured(String id) {
         FeaturedListing featuredListing = featuredRepository.findById(id).
                 orElseThrow(NoSuchElementException::new);
@@ -51,9 +59,8 @@ public class FeaturedListingServiceImpl implements FeaturedListingService {
     }
 
     @Override
-    public FeaturedListing editFeatured(FeaturedListing featuredListing) {
-        featuredListing = featuredListingBuilder.reset().setCurrent(featuredListing).build();
-        featuredRepository.save(featuredListing);
-        return featuredListing;
+    @Async("asyncTaskExecutor")
+    public void deleteAll() {
+        featuredRepository.deleteAll();
     }
 }
