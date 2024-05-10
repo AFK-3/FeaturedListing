@@ -80,4 +80,24 @@ public class FeaturedListingController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Listing not found");
         }
     }
+
+    @DeleteMapping("/delete-all")
+    public ResponseEntity<String> deleteAll(Model model, @RequestHeader("Authorization") String token) {
+        String userRole = AuthMiddleware.getRoleFromToken(token);
+        String username = AuthMiddleware.getRoleFromToken(token);
+
+        if (username == null || userRole == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+        }
+        if (!userRole.equals("STAFF")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Role must be Staff");
+        }
+
+        try {
+            featuredListingService.deleteAll();
+            return ResponseEntity.ok("All listing successfully removed from featured");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Listing not found");
+        }
+    }
 }
