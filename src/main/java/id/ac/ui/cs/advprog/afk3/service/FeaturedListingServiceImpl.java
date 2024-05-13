@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -36,12 +37,9 @@ public class FeaturedListingServiceImpl implements FeaturedListingService {
 
     @Override
     public List<FeaturedListing> findAll(){
-        return featuredRepository.findAll();
-    }
-
-    @Override
-    public boolean checkIfListingPresent(String id) {
-        return featuredListingRepository.checkIfListingPresent(id);
+        List<FeaturedListing> featuredListingList = featuredRepository.
+                findFeaturedListingsByFeaturedExpiryTimeAfter(LocalDate.now());
+        return featuredListingList;
     }
 
     @Override

@@ -1,13 +1,16 @@
 package id.ac.ui.cs.advprog.afk3.controller;
 
 import id.ac.ui.cs.advprog.afk3.middleware.AuthMiddleware;
+import id.ac.ui.cs.advprog.afk3.middleware.ListingMiddleware;
 import id.ac.ui.cs.advprog.afk3.model.FeaturedListing;
+import id.ac.ui.cs.advprog.afk3.model.Listing;
 import id.ac.ui.cs.advprog.afk3.service.FeaturedListingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -33,16 +36,22 @@ public class FeaturedListingController {
     }
 
     @GetMapping("/{listingId}")
-    public ResponseEntity<?> getFeaturedById(Model model, @PathVariable("listingId") String listingId) {
+    public ResponseEntity<?> getFeaturedById(Model model, @PathVariable("listingId") String listingId, @RequestHeader("Authorization") String token) {
+        Listing listing = ListingMiddleware.getListing(listingId, token);
+
         try {
-            return ResponseEntity.ok(featuredListingService.getFeaturedById(listingId));
+            FeaturedListing featuredListing = featuredListingService.getFeaturedById(listingId);
+            featuredListing.setName(listing.getName());
+            featuredListing.setSellerUsername(listing.getSellerUsername());
+
+            return ResponseEntity.ok(featuredListing);
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Listing not found");
         }
     }
 
     @GetMapping("/get-all")
-    public List<FeaturedListing> getAllFeatured() {
+    public List<FeaturedListing> getAllFeatured(@RequestHeader("Authorization") String token) {
         return featuredListingService.findAll();
     }
 

@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
@@ -24,15 +24,6 @@ public class FeaturedListing{
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "quantity")
-    private int quantity;
-
     @Column(name = "expiry_time")
-    private Calendar featuredExpiryTime;
-
-    public void setFeatured(boolean b) {
-    }
+    private LocalDate featuredExpiryTime = LocalDate.now().plusDays(7);
 }

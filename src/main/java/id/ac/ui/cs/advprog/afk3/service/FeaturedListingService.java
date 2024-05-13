@@ -9,7 +9,6 @@ public interface FeaturedListingService {
     public FeaturedListing create(FeaturedListing listing);
     public FeaturedListing getFeaturedById(String id);
     public List<FeaturedListing> findAll();
-    public boolean checkIfListingPresent(String id);
     public FeaturedListing editFeatured(FeaturedListing featuredListing);
     public void deleteFeatured(String id);
     public void deleteAll();

@@ -21,7 +21,7 @@ public class ListingServiceImpl implements  ListingService{
 
     @Autowired
     private UserRepository userRepository;
-
+/*
     @Override
     public Listing create(Listing listing){
         User owner = userRepository.findByUsername(listing.getSellerUsername());
@@ -70,5 +70,5 @@ public class ListingServiceImpl implements  ListingService{
     public void markAsFeatured(String listingId) { listingRepository.markAsFeatured(listingId); }
 
     @Override
-    public List<Listing> getFeaturedListings() { return listingRepository.getFeatured(); }
+    public List<Listing> getFeaturedListings() { return listingRepository.getFeatured(); }*/
 }

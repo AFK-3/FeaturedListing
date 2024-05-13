@@ -21,7 +21,7 @@ public class FeaturedListingRepository {
         featuredListingData.add(listing);
         return listing;
     }
-
+/*
     public Iterator<FeaturedListing> findAll(){
         return featuredListingData.iterator();
     }
@@ -54,5 +54,5 @@ public class FeaturedListingRepository {
                 FeaturedListing.setFeaturedExpiryTime(featuredExpiryTime);
             }
         }
-    }
+    }*/
 }
