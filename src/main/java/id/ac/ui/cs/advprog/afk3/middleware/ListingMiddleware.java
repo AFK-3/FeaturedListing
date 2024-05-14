@@ -11,7 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
-public class ListingMiddleware {
+public class ListingMiddleware {/*
     public static final String sellUrl = "http://34.126.165.220/";
     public static Listing getListing(String id, String token) {
         RestTemplate restTemplate = new RestTemplate();
@@ -33,5 +33,5 @@ public class ListingMiddleware {
             System.err.println("Request failed: " + e.getMessage());
             return null;
         }
-    }
+    }*/
 }

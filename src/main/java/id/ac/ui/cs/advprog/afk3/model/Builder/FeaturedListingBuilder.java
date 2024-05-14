@@ -1,8 +1,6 @@
 package id.ac.ui.cs.advprog.afk3.model.Builder;
 
 import id.ac.ui.cs.advprog.afk3.model.FeaturedListing;
-import id.ac.ui.cs.advprog.afk3.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -10,9 +8,6 @@ import java.time.LocalDate;
 @Component
 public class FeaturedListingBuilder {
     private FeaturedListing currentFeaturedListing;
-
-    @Autowired
-    private UserRepository userRepository;
 
     public FeaturedListingBuilder(){
         this.reset();
