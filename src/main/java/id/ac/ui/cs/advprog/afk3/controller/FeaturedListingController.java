@@ -37,12 +37,12 @@ public class FeaturedListingController {
 
     @GetMapping("/{listingId}")
     public ResponseEntity<?> getFeaturedById(Model model, @PathVariable("listingId") String listingId, @RequestHeader("Authorization") String token) {
-        //Listing listing = ListingMiddleware.getListing(listingId, token);
+        Listing listing = ListingMiddleware.getListing(listingId, token);
 
         try {
             FeaturedListing featuredListing = featuredListingService.getFeaturedById(listingId);
-            //featuredListing.setName(listing.getName());
-            //featuredListing.setSellerUsername(listing.getSellerUsername());
+            featuredListing.setName(listing.getName());
+            featuredListing.setSellerUsername(listing.getSellerUsername());
 
             return ResponseEntity.ok(featuredListing);
         } catch (NoSuchElementException e) {
