@@ -1,18 +1,12 @@
 package id.ac.ui.cs.advprog.afk3.model.Builder;
 
 import id.ac.ui.cs.advprog.afk3.model.Listing;
-import id.ac.ui.cs.advprog.afk3.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 public class ListingBuilder {
     private Listing currentListing;
-
-    @Autowired
-    private UserRepository userRepository;
 
     public ListingBuilder(){
         this.reset();

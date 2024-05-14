@@ -2,7 +2,6 @@ package id.ac.ui.cs.advprog.afk3.service;
 
 import id.ac.ui.cs.advprog.afk3.model.Builder.FeaturedListingBuilder;
 import id.ac.ui.cs.advprog.afk3.model.FeaturedListing;
-import id.ac.ui.cs.advprog.afk3.repository.FeaturedListingRepository;
 import id.ac.ui.cs.advprog.afk3.repository.FeaturedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -13,9 +12,6 @@ import java.util.*;
 
 @Service
 public class FeaturedListingServiceImpl implements FeaturedListingService {
-    @Autowired
-    FeaturedListingRepository featuredListingRepository;
-
     @Autowired
     private FeaturedListingBuilder featuredListingBuilder;
 
