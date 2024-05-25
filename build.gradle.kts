@@ -6,6 +6,14 @@ plugins {
 	id("org.sonarqube") version "4.4.1.3373"
 }
 
+sonar {
+	properties {
+		property("sonar.projectKey", "AFK-3_FeaturedListing")
+		property("sonar.organization", "afk-3")
+		property("sonar.host.url", "https://sonarcloud.io")
+	}
+}
+
 group = "id.ac.ui.cs.advprog"
 version = "0.0.1-SNAPSHOT"
 
@@ -47,7 +55,7 @@ tasks.register<Test>("unitTest") {
 	}
 }
 
-tasks.withType<Test> {
+tasks.withType<Test>().configureEach{
 	useJUnitPlatform()
 }
 
