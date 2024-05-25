@@ -55,12 +55,20 @@ tasks.register<Test>("unitTest") {
 	}
 }
 
+tasks.register<Test>("functionalTest") {
+	description = "Runs functional tests."
+	group = "verification"
+
+	filter {
+		includeTestsMatching("*FunctionalTest")
+	}
+}
+
 tasks.withType<Test>().configureEach{
 	useJUnitPlatform()
 }
 
 tasks.test {
-	useJUnitPlatform()
 	filter {
 		excludeTestsMatching("*FunctionalTest")
 
@@ -70,8 +78,8 @@ tasks.test {
 tasks.jacocoTestReport {
 	dependsOn(tasks.test) // tests are required to run before generating the report
 	reports {
-		xml.required.set(false)
-		csv.required.set(false)
+		xml.required.set(true)
+		csv.required.set(true)
 		html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
 	}
 	val excludes = listOf(
