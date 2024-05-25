@@ -70,11 +70,6 @@ jobs:
           ./gradlew test
           ./gradlew jacocoTestReport
       # (Optional) Add steps for generating coverage report and other post-test tasks
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   publish:
     name: Publish Docker Image
