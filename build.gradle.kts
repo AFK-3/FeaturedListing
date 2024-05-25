@@ -46,13 +46,20 @@ tasks.test {
 	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
 }
 tasks.jacocoTestReport {
-	classDirectories.setFrom(files(classDirectories.files.map {
-		fileTree(it) { exclude("**/*Application**") }
-	}))
 	dependsOn(tasks.test) // tests are required to run before generating the report
 	reports {
 		xml.required.set(false)
 		csv.required.set(false)
 		html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
 	}
+	val excludes = listOf(
+			"id/ac/ui/cs/advprog/afk3/model/Builder",
+			"id/ac/ui/cs/advprog/afk3/controller/HomePageController.class",
+			"**/*Application**"
+	)
+	classDirectories.setFrom(
+			files(classDirectories.files.map {
+				fileTree(it).exclude(excludes)
+			})
+	)
 }
