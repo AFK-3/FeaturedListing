@@ -46,7 +46,7 @@ public class FeaturedListingController {
 
             return ResponseEntity.ok(featuredListing);
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Listing not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Listing not found");
         }
     }
 
@@ -86,7 +86,7 @@ public class FeaturedListingController {
             featuredListingService.deleteFeatured(listingId);
             return ResponseEntity.ok("Listing successfully removed from featured");
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Listing not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Listing not found");
         }
     }
 
@@ -106,7 +106,7 @@ public class FeaturedListingController {
             featuredListingService.deleteAll();
             return ResponseEntity.ok("All listing successfully removed from featured");
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Listing not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Listing not found");
         }
     }
 }
