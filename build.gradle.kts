@@ -11,6 +11,7 @@ sonar {
 		property("sonar.projectKey", "AFK-3_FeaturedListing")
 		property("sonar.organization", "afk-3")
 		property("sonar.host.url", "https://sonarcloud.io")
+		property("sonar.projectName", "FeaturedListing")
 	}
 }
 
