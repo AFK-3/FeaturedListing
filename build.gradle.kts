@@ -6,14 +6,6 @@ plugins {
 	id("org.sonarqube") version "4.4.1.3373"
 }
 
-sonar {
-	properties {
-		property("sonar.projectKey", "AFK-3_FeaturedListing")
-		property("sonar.organization", "afk-3")
-		property("sonar.host.url", "https://sonarcloud.io")
-	}
-}
-
 group = "id.ac.ui.cs.advprog"
 version = "0.0.1-SNAPSHOT"
 
@@ -46,12 +38,25 @@ dependencies {
 	testImplementation("com.h2database:h2")
 }
 
+tasks.register<Test>("unitTest") {
+	description = "Runs unit tests."
+	group = "verification"
+
+	filter {
+		excludeTestsMatching("*FunctionalTest")
+	}
+}
+
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
 tasks.test {
 	useJUnitPlatform()
+	filter {
+		excludeTestsMatching("*FunctionalTest")
+
+	}
 	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
 }
 tasks.jacocoTestReport {
