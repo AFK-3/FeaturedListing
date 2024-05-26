@@ -73,6 +73,11 @@ public class FeaturedListingController {
         return featuredListingListBefore;
     }
 
+    @GetMapping("/get-all-listing")
+    public List<Listing> getAllListing(@RequestHeader("Authorization") String token) {
+        return ListingMiddleware.getAllListings(token);
+    }
+
     @PutMapping("/edit")
     public ResponseEntity<?> editFeatured(@RequestHeader("Authorization") String token, @RequestBody FeaturedListing listing) {
         String userRole = AuthMiddleware.getRoleFromToken(token);
