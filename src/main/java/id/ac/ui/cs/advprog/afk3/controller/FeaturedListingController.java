@@ -52,7 +52,20 @@ public class FeaturedListingController {
 
     @GetMapping("/get-all")
     public List<FeaturedListing> getAllFeatured(@RequestHeader("Authorization") String token) {
-        return featuredListingService.findAll();
+        List<FeaturedListing> featuredListingListBefore = featuredListingService.findAll();
+        List<Listing> listingList = ListingMiddleware.getAllListings(token);
+
+        for (FeaturedListing featuredListing : featuredListingListBefore) {
+            assert listingList != null;
+            for (Listing listing : listingList) {
+                if (featuredListing.getId().equals(listing.getId())) {
+                    featuredListing.setName(listing.getName());
+                    featuredListing.setSellerUsername(listing.getSellerUsername());
+                }
+            }
+        }
+
+        return featuredListingListBefore;
     }
 
     @PutMapping("/edit")

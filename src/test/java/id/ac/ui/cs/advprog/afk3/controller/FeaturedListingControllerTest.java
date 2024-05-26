@@ -167,21 +167,40 @@ public class FeaturedListingControllerTest {
 
         List<FeaturedListing> featuredListings = Arrays.asList(listing1, listing2);
 
+        Listing listing3 = new Listing();
+        listing3.setId("1");
+        listing3.setSellerUsername("rafi");
+        listing3.setName("produk1");
+
+        Listing listing4 = new Listing();
+        listing4.setId("2");
+        listing4.setSellerUsername("rafi");
+        listing4.setName("produk2");
+
+        List<Listing> Listings = Arrays.asList(listing3, listing4);
+
         when(featuredListingService.findAll()).thenReturn(featuredListings);
+        try(MockedStatic<ListingMiddleware> mockListingMiddleware = Mockito.mockStatic(ListingMiddleware.class)) {
+            mockListingMiddleware.when(() -> ListingMiddleware.getAllListings(token)).thenReturn(Listings);
 
-        ResultActions resultActions = mockMvc.perform(get("/featured-listing/get-all")
-                .header("Authorization", token)
-                .contentType(MediaType.APPLICATION_JSON));
+            ResultActions resultActions = mockMvc.perform(get("/featured-listing/get-all")
+                    .header("Authorization", token)
+                    .contentType(MediaType.APPLICATION_JSON));
 
-        resultActions.andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value("1"))
-                .andExpect(jsonPath("$[0].featuredExpiryTime[0]").value (LocalDate.now().plusDays(5).getYear()))
-                .andExpect(jsonPath("$[0].featuredExpiryTime[1]").value (LocalDate.now().plusDays(5).getMonthValue()))
-                .andExpect(jsonPath("$[0].featuredExpiryTime[2]").value (LocalDate.now().plusDays(5).getDayOfMonth()))
-                .andExpect(jsonPath("$[1].id").value("2"))
-                .andExpect(jsonPath("$[1].featuredExpiryTime[0]").value (LocalDate.now().plusDays(10).getYear()))
-                .andExpect(jsonPath("$[1].featuredExpiryTime[1]").value (LocalDate.now().plusDays(10).getMonthValue()))
-                .andExpect(jsonPath("$[1].featuredExpiryTime[2]").value (LocalDate.now().plusDays(10).getDayOfMonth()));
+            resultActions.andExpect(status().isOk())
+                    .andExpect(jsonPath("$[0].id").value("1"))
+                    .andExpect(jsonPath("$[0].featuredExpiryTime[0]").value (LocalDate.now().plusDays(5).getYear()))
+                    .andExpect(jsonPath("$[0].featuredExpiryTime[1]").value (LocalDate.now().plusDays(5).getMonthValue()))
+                    .andExpect(jsonPath("$[0].featuredExpiryTime[2]").value (LocalDate.now().plusDays(5).getDayOfMonth()))
+                    .andExpect(jsonPath("$[0].name").value("produk1"))
+                    .andExpect(jsonPath("$[0].sellerUsername").value("rafi"))
+                    .andExpect(jsonPath("$[1].id").value("2"))
+                    .andExpect(jsonPath("$[1].featuredExpiryTime[0]").value (LocalDate.now().plusDays(10).getYear()))
+                    .andExpect(jsonPath("$[1].featuredExpiryTime[1]").value (LocalDate.now().plusDays(10).getMonthValue()))
+                    .andExpect(jsonPath("$[1].featuredExpiryTime[2]").value (LocalDate.now().plusDays(10).getDayOfMonth()))
+                    .andExpect(jsonPath("$[1].name").value("produk2"))
+                    .andExpect(jsonPath("$[1].sellerUsername").value("rafi"));
+        }
     }
 
     @Test
