@@ -204,6 +204,49 @@ class FeaturedListingControllerTest {
     }
 
     @Test
+    void testGetAllListing() throws Exception {
+        String token = "valid_token";
+        FeaturedListing listing1 = new FeaturedListing();
+        listing1.setId("1");
+        listing1.setFeaturedExpiryTime(LocalDate.now().plusDays(5));
+
+        FeaturedListing listing2 = new FeaturedListing();
+        listing2.setId("2");
+        listing2.setFeaturedExpiryTime(LocalDate.now().plusDays(10));
+
+        List<FeaturedListing> featuredListings = Arrays.asList(listing1, listing2);
+
+        Listing listing3 = new Listing();
+        listing3.setId("1");
+        listing3.setSellerUsername("rafi");
+        listing3.setName("produk1");
+
+        Listing listing4 = new Listing();
+        listing4.setId("2");
+        listing4.setSellerUsername("rafi");
+        listing4.setName("produk2");
+
+        List<Listing> Listings = Arrays.asList(listing3, listing4);
+
+        when(featuredListingService.findAll()).thenReturn(featuredListings);
+        try(MockedStatic<ListingMiddleware> mockListingMiddleware = Mockito.mockStatic(ListingMiddleware.class)) {
+            mockListingMiddleware.when(() -> ListingMiddleware.getAllListings(token)).thenReturn(Listings);
+
+            ResultActions resultActions = mockMvc.perform(get("/featured-listing/get-all-listing")
+                    .header("Authorization", token)
+                    .contentType(MediaType.APPLICATION_JSON));
+
+            resultActions.andExpect(status().isOk())
+                    .andExpect(jsonPath("$[0].id").value("1"))
+                    .andExpect(jsonPath("$[0].name").value("produk1"))
+                    .andExpect(jsonPath("$[0].sellerUsername").value("rafi"))
+                    .andExpect(jsonPath("$[1].id").value("2"))
+                    .andExpect(jsonPath("$[1].name").value("produk2"))
+                    .andExpect(jsonPath("$[1].sellerUsername").value("rafi"));
+        }
+    }
+
+    @Test
     void editFeaturedSuccess() throws Exception {
         String token = "valid_token_with_staff_role";
         String requestBody = "{\"id\": \"65cb5b49-fa43-4e87-9e56-8c9bfc7\", " +
