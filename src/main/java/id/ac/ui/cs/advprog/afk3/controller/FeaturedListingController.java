@@ -16,6 +16,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/featured-listing")
+@CrossOrigin(origins = "*")
 public class FeaturedListingController {
     @Autowired
     private FeaturedListingService featuredListingService;
