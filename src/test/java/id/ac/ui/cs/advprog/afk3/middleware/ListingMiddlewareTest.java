@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
 
-public class ListingMiddlewareTest {
+class ListingMiddlewareTest {
     @InjectMocks
     private ListingMiddleware listingMiddleware;
 
@@ -30,14 +30,14 @@ public class ListingMiddlewareTest {
     private final String token = String.format("Bearer %s", fetchToken("rafi2", "rafizia1"));
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
         restTemplate = new RestTemplate();
         mockServer = MockRestServiceServer.createServer(restTemplate);
         objectMapper = new ObjectMapper();
     }
 
-    public static String fetchToken(String username, String password) {
+    static String fetchToken(String username, String password) {
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://35.198.243.155/api/auth/login?username=" + username + "&password=" + password;
 
@@ -55,7 +55,7 @@ public class ListingMiddlewareTest {
     }
 
     @Test
-    public void testGetListingSuccess() throws JsonProcessingException {
+    void testGetListingSuccess() throws JsonProcessingException {
         String id = "92a1ccda-fd9e-46ec-89a8-b9ef619b23d0";
         String expectedUrl = "http://34.126.165.220/listing/get-by-id/" + id;
         Listing expectedListing = new Listing();
@@ -74,7 +74,7 @@ public class ListingMiddlewareTest {
     }
 
     @Test
-    public void testGetListingError() {
+    void testGetListingError() {
         String id = "invalid_id";
         String expectedUrl = "http://34.126.165.220/listing/get-by-id/" + id;
 
@@ -87,7 +87,7 @@ public class ListingMiddlewareTest {
     }
 
     @Test
-    public void testGetAllListingSuccess() throws JsonProcessingException {
+    void testGetAllListingSuccess() throws JsonProcessingException {
         String id = "92a1ccda-fd9e-46ec-89a8-b9ef619b23d0";
         String expectedUrl = "http://34.126.165.220/listing/get-all";
         Listing expectedListing = new Listing();
@@ -106,7 +106,7 @@ public class ListingMiddlewareTest {
     }
 
     @Test
-    public void testGetAllListingError() throws JsonProcessingException {
+    void testGetAllListingError() {
         List<Listing> listingList = listingMiddleware.getAllListings("invalid_token");
 
         assertNull(listingList);

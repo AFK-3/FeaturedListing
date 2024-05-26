@@ -1,7 +1,6 @@
-package id.ac.ui.cs.advprog.afk3.model.Builder;
+package id.ac.ui.cs.advprog.afk3.model.builder;
 
 import id.ac.ui.cs.advprog.afk3.model.Listing;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

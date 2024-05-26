@@ -1,6 +1,6 @@
 package id.ac.ui.cs.advprog.afk3.service;
 
-import id.ac.ui.cs.advprog.afk3.model.Builder.FeaturedListingBuilder;
+import id.ac.ui.cs.advprog.afk3.model.builder.FeaturedListingBuilder;
 import id.ac.ui.cs.advprog.afk3.model.FeaturedListing;
 import id.ac.ui.cs.advprog.afk3.repository.FeaturedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +33,8 @@ public class FeaturedListingServiceImpl implements FeaturedListingService {
 
     @Override
     public List<FeaturedListing> findAll(){
-        List<FeaturedListing> featuredListingList = featuredRepository.
+        return featuredRepository.
                 findFeaturedListingsByFeaturedExpiryTimeAfter(LocalDate.now());
-        return featuredListingList;
     }
 
     @Override

@@ -38,12 +38,12 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+	runtimeOnly("org.postgresql:postgresql")
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("com.h2database:h2")
 }
 
@@ -84,7 +84,7 @@ tasks.jacocoTestReport {
 		html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
 	}
 	val excludes = listOf(
-			"id/ac/ui/cs/advprog/afk3/model/Builder",
+			"id/ac/ui/cs/advprog/afk3/model/builder",
 			"id/ac/ui/cs/advprog/afk3/controller/HomePageController.class",
 			"**/*Application**"
 	)

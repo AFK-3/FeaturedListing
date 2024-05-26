@@ -1,6 +1,6 @@
 package id.ac.ui.cs.advprog.afk3.service;
 
-import id.ac.ui.cs.advprog.afk3.model.Builder.FeaturedListingBuilder;
+import id.ac.ui.cs.advprog.afk3.model.builder.FeaturedListingBuilder;
 import id.ac.ui.cs.advprog.afk3.model.FeaturedListing;
 import id.ac.ui.cs.advprog.afk3.repository.FeaturedRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class FeaturedListingServiceImplTest {
+class FeaturedListingServiceImplTest {
     @Mock
     private FeaturedListingBuilder featuredListingBuilder;
 
@@ -32,8 +32,8 @@ public class FeaturedListingServiceImplTest {
     List<FeaturedListing> featuredListingList;
 
     @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
         featuredListingList = new ArrayList<>();
         FeaturedListing featuredListing1 = new FeaturedListing(
                 "1", "user1", "product1", LocalDate.now().plusDays(7));
@@ -44,7 +44,7 @@ public class FeaturedListingServiceImplTest {
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         FeaturedListing inputListing = new FeaturedListing(
                 "1", "user1", "product1", LocalDate.now().plusDays(7));
 
@@ -65,7 +65,7 @@ public class FeaturedListingServiceImplTest {
     }
 
     @Test
-    public void testGetFeaturedByIdFound() {
+    void testGetFeaturedByIdFound() {
         String id = "1";
         when(featuredRepository.findById(id)).thenReturn(Optional.of(featuredListingList.getFirst()));
 
@@ -76,17 +76,15 @@ public class FeaturedListingServiceImplTest {
     }
 
     @Test
-    public void testGetFeaturedByIdNotFound() {
+    void testGetFeaturedByIdNotFound() {
         String id = "3";
         when(featuredRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(NoSuchElementException.class, () -> {
-            featuredListingService.getFeaturedById(id);
-        });
+        assertThrows(NoSuchElementException.class, () -> featuredListingService.getFeaturedById(id));
     }
 
     @Test
-    public void testFindAll() {
+    void testFindAll() {
         when(featuredRepository.findFeaturedListingsByFeaturedExpiryTimeAfter(any(LocalDate.class)))
                 .thenReturn(featuredListingList);
 
@@ -99,7 +97,7 @@ public class FeaturedListingServiceImplTest {
     }
 
     @Test
-    public void testEditFeatured() {
+    void testEditFeatured() {
         FeaturedListing inputListing = new FeaturedListing(
                 "1", "user1", "product1", LocalDate.now().plusDays(10));
 
@@ -121,7 +119,7 @@ public class FeaturedListingServiceImplTest {
     }
 
     @Test
-    public void deleteFeaturedFound() {
+    void deleteFeaturedFound() {
         String id = "1";
         when(featuredRepository.findById(id)).thenReturn(Optional.of(featuredListingList.getFirst()));
 
@@ -132,20 +130,18 @@ public class FeaturedListingServiceImplTest {
     }
 
     @Test
-    public void deleteFeaturedNotFound() {
+    void deleteFeaturedNotFound() {
         String id = "3";
         when(featuredRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(NoSuchElementException.class, () -> {
-            featuredListingService.deleteFeatured(id);
-        });
+        assertThrows(NoSuchElementException.class, () -> featuredListingService.deleteFeatured(id));
 
         verify(featuredRepository).findById(id);
         verify(featuredRepository, never()).delete(any(FeaturedListing.class));
     }
 
     @Test
-    public void deleteAllFeaturedListings() {
+    void deleteAllFeaturedListings() {
         featuredListingService.deleteAll();
 
         verify(featuredRepository).deleteAll();

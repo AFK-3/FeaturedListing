@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.afk3.model.Builder;
+package id.ac.ui.cs.advprog.afk3.model.builder;
 
 import id.ac.ui.cs.advprog.afk3.model.FeaturedListing;
 import org.springframework.stereotype.Component;

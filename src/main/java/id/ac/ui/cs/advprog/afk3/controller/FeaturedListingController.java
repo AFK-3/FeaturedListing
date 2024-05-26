@@ -18,6 +18,10 @@ import java.util.NoSuchElementException;
 @RequestMapping("/featured-listing")
 @CrossOrigin(origins = "*")
 public class FeaturedListingController {
+    public static final String INVALID_TOKEN = "Invalid token";
+    public static final String ROLE_MUST_BE_STAFF = "Role must be Staff";
+    public static final String LISTING_NOT_FOUND = "Listing not found";
+
     @Autowired
     private FeaturedListingService featuredListingService;
 
@@ -27,10 +31,10 @@ public class FeaturedListingController {
         String username = AuthMiddleware.getRoleFromToken(token);
 
         if (username == null || userRole == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(INVALID_TOKEN);
         }
         if (!userRole.equals("STAFF")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Role must be Staff");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ROLE_MUST_BE_STAFF);
         }
 
         return ResponseEntity.ok(featuredListingService.create(listing));
@@ -47,7 +51,7 @@ public class FeaturedListingController {
 
             return ResponseEntity.ok(featuredListing);
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Listing not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(LISTING_NOT_FOUND);
         }
     }
 
@@ -75,10 +79,10 @@ public class FeaturedListingController {
         String username = AuthMiddleware.getRoleFromToken(token);
 
         if (username == null || userRole == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(INVALID_TOKEN);
         }
         if (!userRole.equals("STAFF")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Role must be Staff");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ROLE_MUST_BE_STAFF);
         }
 
         return ResponseEntity.ok(featuredListingService.editFeatured(listing));
@@ -90,17 +94,17 @@ public class FeaturedListingController {
         String username = AuthMiddleware.getRoleFromToken(token);
 
         if (username == null || userRole == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(INVALID_TOKEN);
         }
         if (!userRole.equals("STAFF")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Role must be Staff");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ROLE_MUST_BE_STAFF);
         }
 
         try {
             featuredListingService.deleteFeatured(listingId);
             return ResponseEntity.ok("Listing successfully removed from featured");
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Listing not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(LISTING_NOT_FOUND);
         }
     }
 
@@ -110,17 +114,17 @@ public class FeaturedListingController {
         String username = AuthMiddleware.getRoleFromToken(token);
 
         if (username == null || userRole == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(INVALID_TOKEN);
         }
         if (!userRole.equals("STAFF")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Role must be Staff");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ROLE_MUST_BE_STAFF);
         }
 
         try {
             featuredListingService.deleteAll();
             return ResponseEntity.ok("All listing successfully removed from featured");
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Listing not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(LISTING_NOT_FOUND);
         }
     }
 }
