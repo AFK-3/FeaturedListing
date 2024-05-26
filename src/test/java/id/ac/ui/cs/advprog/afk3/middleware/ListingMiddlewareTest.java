@@ -12,6 +12,8 @@ import org.springframework.http.*;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
@@ -82,5 +84,31 @@ public class ListingMiddlewareTest {
         Listing listing = listingMiddleware.getListing(id, token);
 
         assertNull(listing);
+    }
+
+    @Test
+    public void testGetAllListingSuccess() throws JsonProcessingException {
+        String id = "92a1ccda-fd9e-46ec-89a8-b9ef619b23d0";
+        String expectedUrl = "http://34.126.165.220/listing/get-all";
+        Listing expectedListing = new Listing();
+        expectedListing.setId(id);
+        expectedListing.setName("produk10");
+
+        String expectedListingJson = objectMapper.writeValueAsString(expectedListing);
+
+        mockServer.expect(requestTo(expectedUrl))
+                .andRespond(withStatus(HttpStatus.OK).body(expectedListingJson));
+
+        List<Listing> listingList = listingMiddleware.getAllListings(token);
+
+        assertEquals(expectedListing.getId(), listingList.getFirst().getId());
+        assertEquals(expectedListing.getName(), listingList.getFirst().getName());
+    }
+
+    @Test
+    public void testGetAllListingError() throws JsonProcessingException {
+        List<Listing> listingList = listingMiddleware.getAllListings("invalid_token");
+
+        assertNull(listingList);
     }
 }
