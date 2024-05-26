@@ -37,7 +37,7 @@ import java.util.NoSuchElementException;
 
 @WebMvcTest(FeaturedListingController.class)
 @ExtendWith(MockitoExtension.class)
-public class FeaturedListingControllerTest {
+class FeaturedListingControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @InjectMocks
@@ -112,7 +112,7 @@ public class FeaturedListingControllerTest {
     }
 
     @Test
-    public void testGetFeaturedByIdSuccess() throws Exception {
+    void testGetFeaturedByIdSuccess() throws Exception {
         String token = "valid_token";
         String listingId = "1";
         Listing listing = new Listing();
@@ -138,7 +138,7 @@ public class FeaturedListingControllerTest {
     }
 
     @Test
-    public void testGetFeaturedByIdNotFound() throws Exception {
+    void testGetFeaturedByIdNotFound() throws Exception {
         String token = "valid_token";
         String listingId = "1";
 
@@ -155,7 +155,7 @@ public class FeaturedListingControllerTest {
     }
 
     @Test
-    public void testGetAllFeaturedSuccess() throws Exception {
+    void testGetAllFeaturedSuccess() throws Exception {
         String token = "valid_token";
         FeaturedListing listing1 = new FeaturedListing();
         listing1.setId("1");
@@ -204,7 +204,7 @@ public class FeaturedListingControllerTest {
     }
 
     @Test
-    public void editFeaturedSuccess() throws Exception {
+    void editFeaturedSuccess() throws Exception {
         String token = "valid_token_with_staff_role";
         String requestBody = "{\"id\": \"65cb5b49-fa43-4e87-9e56-8c9bfc7\", " +
                 "\"featuredExpiryTime\": \"2030-12-31\"}";
@@ -224,7 +224,7 @@ public class FeaturedListingControllerTest {
     }
 
     @Test
-    public void editFeaturedForbidden() throws Exception {
+    void editFeaturedForbidden() throws Exception {
         String token = "valid_token_with_other_role";
         String requestBody = "{\"id\": \"65cb5b49-fa43-4e87-9e56-8c9bfc7\", " +
                 "\"featuredExpiryTime\": \"2030-12-31\"}";
@@ -244,7 +244,7 @@ public class FeaturedListingControllerTest {
     }
 
     @Test
-    public void editFeaturedUnauthorized() throws Exception {
+    void editFeaturedUnauthorized() throws Exception {
         String token = "invalid_token";
         String requestBody = "{\"id\": \"65cb5b49-fa43-4e87-9e56-8c9bfc7\", " +
                 "\"featuredExpiryTime\": \"2030-12-31\"}";
@@ -264,7 +264,7 @@ public class FeaturedListingControllerTest {
     }
 
     @Test
-    public void deleteFeaturedSuccess() throws Exception {
+    void deleteFeaturedSuccess() throws Exception {
         String token = "valid_token";
         doNothing().when(featuredListingService).deleteFeatured("1");
 
@@ -280,7 +280,7 @@ public class FeaturedListingControllerTest {
     }
 
     @Test
-    public void deleteFeaturedForbidden() throws Exception {
+    void deleteFeaturedForbidden() throws Exception {
         String token = "valid_token";
         doNothing().when(featuredListingService).deleteFeatured("1");
 
@@ -296,7 +296,7 @@ public class FeaturedListingControllerTest {
     }
 
     @Test
-    public void deleteFeaturedUnauthorized() throws Exception {
+    void deleteFeaturedUnauthorized() throws Exception {
         String token = "invalid_token";
         doNothing().when(featuredListingService).deleteFeatured("1");
 
@@ -312,7 +312,7 @@ public class FeaturedListingControllerTest {
     }
 
     @Test
-    public void deleteFeaturedNotFound() throws Exception {
+    void deleteFeaturedNotFound() throws Exception {
         String token = "valid_token";
         doThrow(new NoSuchElementException()).when(featuredListingService).deleteFeatured("1");
 
@@ -328,7 +328,7 @@ public class FeaturedListingControllerTest {
     }
 
     @Test
-    public void deleteAllFeaturedSuccess() throws Exception {
+    void deleteAllFeaturedSuccess() throws Exception {
         String token = "valid_token";
         doNothing().when(featuredListingService).deleteAll();
 
@@ -344,7 +344,7 @@ public class FeaturedListingControllerTest {
     }
 
     @Test
-    public void deleteAllFeaturedForbidden() throws Exception {
+    void deleteAllFeaturedForbidden() throws Exception {
         String token = "valid_token";
         doNothing().when(featuredListingService).deleteAll();
 
@@ -360,7 +360,7 @@ public class FeaturedListingControllerTest {
     }
 
     @Test
-    public void deleteAllFeaturedUnauthorized() throws Exception {
+    void deleteAllFeaturedUnauthorized() throws Exception {
         String token = "invalid_token";
         doNothing().when(featuredListingService).deleteAll();
 
@@ -376,7 +376,7 @@ public class FeaturedListingControllerTest {
     }
 
     @Test
-    public void deleteAllFeaturedNotFound() throws Exception {
+    void deleteAllFeaturedNotFound() throws Exception {
         String token = "valid_token";
         doThrow(new NoSuchElementException()).when(featuredListingService).deleteAll();
 

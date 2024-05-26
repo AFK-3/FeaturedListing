@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.*;
 
-public class FeaturedListingModelTest {
+class FeaturedListingModelTest {
     @Test
-    public void testNoArgsConstructor() {
+    void testNoArgsConstructor() {
         FeaturedListing featuredListing = new FeaturedListing();
 
         assertThat(featuredListing).isNotNull();
@@ -17,7 +17,7 @@ public class FeaturedListingModelTest {
     }
 
     @Test
-    public void testAllArgsConstructor() {
+    void testAllArgsConstructor() {
         String id = "1";
         String sellerUsername = "user123";
         String name = "Featured Product";
@@ -33,7 +33,7 @@ public class FeaturedListingModelTest {
     }
 
     @Test
-    public void testSetId() {
+    void testSetId() {
         FeaturedListing featuredListing = new FeaturedListing();
         String expectedId = "12345";
         featuredListing.setId(expectedId);
@@ -41,7 +41,7 @@ public class FeaturedListingModelTest {
     }
 
     @Test
-    public void testSetSellerUsername() {
+    void testSetSellerUsername() {
         FeaturedListing featuredListing = new FeaturedListing();
         String expectedUsername = "seller123";
         featuredListing.setSellerUsername(expectedUsername);
@@ -49,7 +49,7 @@ public class FeaturedListingModelTest {
     }
 
     @Test
-    public void testSetName() {
+    void testSetName() {
         FeaturedListing featuredListing = new FeaturedListing();
         String expectedName = "Test Product";
         featuredListing.setName(expectedName);
@@ -57,7 +57,7 @@ public class FeaturedListingModelTest {
     }
 
     @Test
-    public void testSetFeaturedExpiryTime() {
+    void testSetFeaturedExpiryTime() {
         FeaturedListing featuredListing = new FeaturedListing();
         LocalDate expectedExpiryTime = LocalDate.now().plusDays(15);
         featuredListing.setFeaturedExpiryTime(expectedExpiryTime);

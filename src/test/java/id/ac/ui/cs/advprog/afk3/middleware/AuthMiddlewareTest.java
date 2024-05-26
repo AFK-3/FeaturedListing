@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
 
-public class AuthMiddlewareTest {
+class AuthMiddlewareTest {
     @InjectMocks
     private AuthMiddleware authMiddleware;
 
@@ -26,14 +26,14 @@ public class AuthMiddlewareTest {
     private final String token = String.format("Bearer %s", fetchToken("rafi2", "rafizia1"));
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
         authMiddleware = new AuthMiddleware();
         restTemplate = new RestTemplate();
         mockServer = MockRestServiceServer.createServer(restTemplate);
     }
 
-    public static String fetchToken(String username, String password) {
+    static String fetchToken(String username, String password) {
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://35.198.243.155/api/auth/login?username=" + username + "&password=" + password;
 
@@ -51,7 +51,7 @@ public class AuthMiddlewareTest {
     }
 
     @Test
-    public void testGetUsernameFromTokenSuccess() {
+    void testGetUsernameFromTokenSuccess() {
         String expectedUsername = "rafi2";
 
         mockServer.expect(requestTo("http://35.198.243.155/user/get-username"))
@@ -63,19 +63,19 @@ public class AuthMiddlewareTest {
     }
 
     @Test
-    public void testGetUsernameFromTokenFailure() {
-        String token = "Bearer invalid-token";
+    void testGetUsernameFromTokenFailure() {
+        String invalid_token = "Bearer invalid-token";
 
         mockServer.expect(requestTo("http://35.198.243.155/user/get-username"))
                 .andRespond(withStatus(HttpStatus.UNAUTHORIZED));
 
-        String username = authMiddleware.getUsernameFromToken(token);
+        String username = authMiddleware.getUsernameFromToken(invalid_token);
 
         assertNull(username);
     }
 
     @Test
-    public void testGetRoleFromTokenSuccess() {
+    void testGetRoleFromTokenSuccess() {
         String expectedRole = "STAFF";
 
         mockServer.expect(requestTo("http://35.198.243.155/user/get-username"))
@@ -87,13 +87,13 @@ public class AuthMiddlewareTest {
     }
 
     @Test
-    public void testGetRoleFromTokenFailure() {
-        String token = "Bearer invalid-token";
+    void testGetRoleFromTokenFailure() {
+        String invalid_token = "Bearer invalid-token";
 
         mockServer.expect(requestTo("http://35.198.243.155/user/get-username"))
                 .andRespond(withStatus(HttpStatus.UNAUTHORIZED));
 
-        String role = authMiddleware.getRoleFromToken(token);
+        String role = authMiddleware.getRoleFromToken(invalid_token);
 
         assertNull(role);
     }

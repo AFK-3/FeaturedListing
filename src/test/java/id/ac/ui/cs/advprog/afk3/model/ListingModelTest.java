@@ -3,9 +3,9 @@ package id.ac.ui.cs.advprog.afk3.model;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ListingModelTest {
+class ListingModelTest {
     @Test
-    public void testSetId() {
+    void testSetId() {
         Listing listing = new Listing();
         String expectedId = "listing123";
         listing.setId(expectedId);
@@ -13,7 +13,7 @@ public class ListingModelTest {
     }
 
     @Test
-    public void testSetSellerUsername() {
+    void testSetSellerUsername() {
         Listing listing = new Listing();
         String expectedUsername = "sellerUsername";
         listing.setSellerUsername(expectedUsername);
@@ -21,7 +21,7 @@ public class ListingModelTest {
     }
 
     @Test
-    public void testSetName() {
+    void testSetName() {
         Listing listing = new Listing();
         String expectedName = "Gadget";
         listing.setName(expectedName);
@@ -29,7 +29,7 @@ public class ListingModelTest {
     }
 
     @Test
-    public void testSetDescription() {
+    void testSetDescription() {
         Listing listing = new Listing();
         String expectedDescription = "Latest model of the gadget with enhanced features.";
         listing.setDescription(expectedDescription);
@@ -37,7 +37,7 @@ public class ListingModelTest {
     }
 
     @Test
-    public void testSetQuantity() {
+    void testSetQuantity() {
         Listing listing = new Listing();
         int expectedQuantity = 50;
         listing.setQuantity(expectedQuantity);
@@ -45,7 +45,7 @@ public class ListingModelTest {
     }
 
     @Test
-    public void testSetIsFeatured() {
+    void testSetIsFeatured() {
         Listing listing = new Listing();
         listing.setFeatured(true);
         assertThat(listing.isFeatured()).isTrue();
